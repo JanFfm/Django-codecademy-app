@@ -1,0 +1,28 @@
+{% extends "inventory/base.html"%}
+
+{% block content %}
+
+<h1>List of Ingredinets and Items:</h1>
+</div>
+<div class="row">
+
+    <table>
+        <tr>
+            <th>MenuItem</th>
+            <th>Ammount</th>
+            <th>Price per unit</th>
+            </tr>
+        {% for reciperequirement in reciperequirement_list %}
+
+
+        <tr>
+            <td>{{ reciperequirement.item.title }}</td>
+            <td>{{ reciperequirement.Ingredient.name }}</td>
+            <td>{{ reciperequirement.ammount }}</td>
+        </tr>
+      
+
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

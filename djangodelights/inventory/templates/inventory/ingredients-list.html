@@ -1,0 +1,26 @@
+{% extends "inventory/base.html"%}
+
+{% block content %}
+
+<h1>List of Ingredinets:</h1>
+
+<div class="row">
+    {% for ingredient in ingredient_list %}
+
+        <div class="col-sm-6 col-md-3">
+            <div class="card" >
+                <img src="{{ ingredient.image_url }} " class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{ ingredient.name }}</h5>
+                <p class="card-text">Price per unit: {{ ingredient.unit_price }} €. <br>
+                    In Inventory: {{ ingredient.quantity}}  {{ ingredient.unit }} 
+                
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}
