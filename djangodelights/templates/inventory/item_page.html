@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Restaurant
+{% endblock %}
+
+
+{% block content%}
+<h1>{{item.name}}</h1> 
+{{item.price}} € <br>
+{% if item.img_link%}
+<img src={{item.img_link}} width="150">
+{% endif %}
+<br>
+<br>
+<a href="{% url 'make_purchase' item.id %}">Buy it</a>
+<br>
+
+{% if recipe|length > 0  %}
+Ingredients:
+{% endif %}
+<ul>
+{% for i in recipe %}
+<li>{{i.0}}: {{i.1}}</li> 
+{% endfor %}
+</ul>
+<br>
+<a href="{% url 'edit_recipe' item.id %}">Edit recipe</a>
+<hr>
+
+
+
+{% endblock %}

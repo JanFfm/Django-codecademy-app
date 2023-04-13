@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Restaurant
+{% endblock %}
+
+
+{% block content %}
+
+
+This is the inventory:
+<ul>
+    {% for i in ingredients %}
+    <li>{{i.id}}: {{i.name}}  {{i.price}}€, No. in stock: {{i.stock}} <a href={% url 'update_inventory_item' i.id %}> update stock </a> 
+        <form action="{% url 'delete_inventory_item' %}" method="post"> 
+            {% csrf_token %} 
+            <input type="hidden"  name="id" value="{{i.id}}">
+            <button class="btn btn-primary" type="submit" role="button">Delete item</input></form></li>
+    {% endfor %}
+</ul>
+
+
+<a href="{% url 'add_inventory__item' %}">Add a new item </a>
+
+
+
+
+{% endblock %}

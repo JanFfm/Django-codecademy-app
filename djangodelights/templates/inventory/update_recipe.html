@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+My Restaurant
+{% endblock %}
+
+
+{% block content %}
+
+
+  
+<h2>Recipe: {{menu_item}}</h2>
+{% for i in recipe %}
+{{i.0}} {{ i.1}}   <form action="{%  url 'submit_recipe_change' 'change' i.4 %}" method="post">{% csrf_token %}{{ i.2}} <input type="submit" value="Submit">
+</form><br>
+{% endfor %}
+
+Add new Ingredient:
+<form action="{%  url 'submit_recipe_change' 'add' id %}" method="post">
+    {% csrf_token %}
+{{form|crispy}}
+<input type="submit" value="Submit">
+</form>   
+
+
+
+{% endblock %}

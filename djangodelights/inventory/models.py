@@ -1,29 +1,35 @@
-from datetime import datetime
-from email.policy import default
-from turtle import title
 from django.db import models
-from django.utils import timezone 
-
+from datetime import datetime
 # Create your models here.
+
 class Ingredient(models.Model):
-    unit_choices = [("g","g"), ("kg", "kg"), ("l", "l"),("piece" ,"piece")  ]
-    name = models.CharField(max_length=30)
-    quantity = models.IntegerField(default=0)
-    unit =  models.CharField(max_length=5, choices=unit_choices, default="piece")
-    unit_price = models.FloatField(default=0.0)
-    image_url = models.CharField(max_length=400, default="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Ikea-Brooklyn-Warehouse-Aisles.jpg/640px-Ikea-Brooklyn-Warehouse-Aisles.jpg")
+    name = models.CharField(max_length=255,unique=True)
+    price = models.PositiveIntegerField ()
+    stock = models.PositiveIntegerField (default=0)
+    def __str__(self):
+        return self.name.title()
+    class Meta:
+            indexes=[models.Index(fields=['price']),models.Index(fields=['stock'])]
+
 
 class MenuItem(models.Model):
-    title = models.CharField(max_length=30)
-    item_price = models.FloatField(default=0.0)
-    image_url = models.CharField(max_length=400, default="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/640px-Good_Food_Display_-_NCI_Visuals_Online.jpg")
- 
-class RecipeRequirement(models.Model):
-    item = models.ForeignKey(MenuItem, on_delete=models.PROTECT)
-    Ingredient = models.ForeignKey(Ingredient, on_delete=models.PROTECT)
-    ammount = models.FloatField(default = 1.0)
-
-class Purchase(models.Model):
-     item = models.ForeignKey(MenuItem,  on_delete=models.PROTECT)
-     time_stamp = models.DateTimeField(default= timezone.now)
+    name = models.CharField(max_length=255,unique=True)
+    price = models.PositiveIntegerField ()
+    img_link = models.CharField(max_length=900, null=True)
+    class Meta:
+        indexes=[models.Index(fields=['price'])]
     
+class Purchases(models.Model):
+    date = models.DateTimeField()
+    item = models.ForeignKey(MenuItem, on_delete=models.PROTECT)
+    class Meta:
+        ordering= ['-date']
+    def __str__(self):
+        return str(self.item.name) + " ("+str(self.item.id)+") " +str(self.date)
+        
+
+class Recipe(models.Model):
+    item =models.ForeignKey(MenuItem, on_delete=models.PROTECT)
+    ingredient=models.ForeignKey(Ingredient, on_delete=models.PROTECT)
+    quantity = models.PositiveIntegerField (default=0)
+

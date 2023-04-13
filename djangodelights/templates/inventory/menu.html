@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Restaurant
+{% endblock %}
+
+
+{% block content %}
+This are our menu-items:
+<ul>
+{% for i in items %}
+<li><a href="{% url 'item_page' i.id %}">{{i.id}}: {{i.name}}  {{i.price}}€ </a><br><br>
+    {% if i.img_link%}
+    <img src={{i.img_link}}  class="rounded img-thumbnail"></li><hr>
+    {% endif %}
+{% endfor %}
+</ul>
+
+
+
+<a href="{% url 'add_menu_item' %}"> Add a new item </a>
+
+
+
+{% endblock %}

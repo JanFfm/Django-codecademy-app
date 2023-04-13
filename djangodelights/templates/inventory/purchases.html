@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Restaurant
+{% endblock %}
+
+
+{% block content %}
+
+
+This are the purchases:
+<ul>
+    {% for p in purchases %}
+    <li>{{p.date}}: <a href ="{% url 'item_page' p.item_id%}">{{p.item_name}}</a> (ID: {{p.item_id}}) </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
+
+
+
